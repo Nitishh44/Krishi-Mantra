@@ -1,0 +1,404 @@
+Dis-ease
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dis-ease - Plant Health Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .sidebar {
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            min-height: 100vh;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem 0;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .nav-item.active {
+            background-color: #f0fdf4;
+            color: #16a34a;
+        }
+        .nav-item:hover:not(.active) {
+            background-color: #f3f4f6;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="flex">
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar w-64 p-6 flex flex-col justify-between hidden md:flex">
+        <div>
+            <div class="flex items-center mb-8">
+                <div class="bg-gray-200 p-2 rounded-lg mr-2">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1v-3.25M7 17h10M7 10h10v7H7v-7zM7 10v3l-3 3M17 10v3l3 3m-3-3h-4v-4h-3v4H7"></path></svg>
+                </div>
+                <span class="text-xl font-bold">dis-ease</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-6 pl-2">Plant Health Assistant</p>
+
+            <!-- Navigation Menu -->
+            <nav>
+                <div id="dashboard-nav" class="nav-item active" data-target="dashboard-content">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    <span>Dashboard</span>
+                </div>
+                <div id="scanner-nav" class="nav-item" data-target="scanner-content">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v-2.18C4 12.396 5.396 11 7.18 11h9.64C18.604 11 20 12.396 20 13.82V16m0-2.18V7m0-2.18C20 3.396 18.604 2 16.82 2H7.18C5.396 2 4 3.396 4 5.18V7m0 7.82V16m0-2.18c0 1.604 1.396 2.999 3.18 2.999h9.64c1.784 0 3.18-1.395 3.18-2.999v-2.18"></path></svg>
+                    <span>Plant Scanner</span>
+                </div>
+                <div id="weather-nav" class="nav-item" data-target="weather-content">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 014-4h2a4 4 0 014 4v5a4 4 0 01-4 4h-2a4 4 0 01-4-4v-5z"></path></svg>
+                    <span>Weather Monitor</span>
+                </div>
+                <div id="crop-nav" class="nav-item" data-target="crop-content">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10V6m0 4a4 4 0 014 4m-4-4a4 4 0 00-4 4m8 0v4m0-4a4 4 0 01-4-4m4 4a4 4 0 00-4-4m-4 4v4m0-4a4 4 0 014 4m-4-4a4 4 0 00-4 4"></path></svg>
+                    <span>Crop Advisor</span>
+                </div>
+                <div id="history-nav" class="nav-item" data-target="history-content">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>Scan History</span>
+                </div>
+            </nav>
+
+            <!-- Quick Stats -->
+            <div class="mt-8 px-2">
+                <p class="text-xs text-gray-500 font-bold mb-4">QUICK STATS</p>
+                <div class="text-sm flex justify-between items-center mb-2">
+                    <span>Plants Scanned</span>
+                    <span class="font-semibold text-gray-800">2</span>
+                </div>
+                <div class="text-sm flex justify-between items-center">
+                    <span>Health Score</span>
+                    <span class="font-semibold text-gray-800">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- User and Language -->
+        <div class="flex flex-col space-y-4">
+            <div class="relative">
+                <select class="w-full p-2 rounded-lg bg-gray-100 text-sm font-semibold text-gray-700 appearance-none pr-8">
+                    <option>English</option>
+                    <option>Spanish</option>
+                </select>
+            </div>
+            <div class="flex items-center space-x-3 p-3 rounded-lg bg-gray-100">
+                <div class="bg-green-100 p-2 rounded-full">
+                    <span class="text-green-800 font-bold">U</span>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold">Farmer</p>
+                    <p class="text-xs text-gray-500">Plant Health Expert</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8 overflow-y-auto">
+        
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" class="page-content">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Plant Health Dashboard</h1>
+            <p class="text-sm text-gray-500 mb-8">Monitor your crops and get intelligent farming insights</p>
+
+            <!-- Dashboard Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500">Plants Scanned</span>
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M15 12h.01M9 12h.01M13 16h.01M5 20h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold">2</p>
+                    <p class="text-sm text-gray-500">Total diagnoses</p>
+                </div>
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500">Healthy Plants</span>
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold">0</p>
+                    <p class="text-sm text-gray-500">Good condition</p>
+                </div>
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500">Temperature</span>
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10a2 2 0 00-2-2V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 00-2 2h-4a2 2 0 00-2-2v-4a2 2 0 00-2-2"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold">Loading...</p>
+                    <p class="text-sm text-gray-500">Current reading</p>
+                </div>
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500">Growth Trend</span>
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h9m-9 0v8m0-8a4 4 0 11-8 0m8 0a4 4 0 108 0m-8 0v4m0-4a4 4 0 10-8 0m8 0a4 4 0 118 0m-8 0v4"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold">Optimal</p>
+                    <p class="text-sm text-gray-500">Current season</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Recent Plant Scans -->
+                <div class="card p-6 col-span-2">
+                    <h2 class="text-lg font-semibold mb-4">Recent Plant Scans</h2>
+                    <div class="flex items-center p-4 border rounded-xl mb-4">
+                        <div class="bg-gray-100 p-3 rounded-full mr-4">
+                             <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10a2 2 0 00-2-2V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 00-2 2h-4a2 2 0 00-2-2v-4a2 2 0 00-2-2"></path></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900">Rose Bush <span class="status-badge bg-red-100 text-red-600">▲ high</span></h3>
+                            <p class="text-sm text-gray-600">Powdery Mildew</p>
+                            <p class="text-xs text-gray-400 mt-1">Aug 30, 2025 at 1:32 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-4 border rounded-xl">
+                        <div class="bg-gray-100 p-3 rounded-full mr-4">
+                            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10a2 2 0 00-2-2V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 00-2 2h-4a2 2 0 00-2-2v-4a2 2 0 00-2-2"></path></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900">Tomato Plant <span class="status-badge bg-orange-100 text-orange-600">● moderate</span></h3>
+                            <p class="text-sm text-gray-600">Early Blight</p>
+                            <p class="text-xs text-gray-400 mt-1">Aug 30, 2025 at 1:32 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions and Weather Insights -->
+                <div class="flex flex-col space-y-6">
+                    <!-- Quick Actions -->
+                    <div class="card p-6">
+                        <h2 class="text-lg font-semibold mb-4">Quick Actions</h2>
+                        <div class="space-y-4">
+                            <button id="scan-plant-btn" class="w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl transition-all duration-200">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.586a2 2 0 011.414.586L10 10.586l1.586 1.586A2 2 0 0113.586 13h.586a2 2 0 012 2v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4a2 2 0 012-2z"></path></svg>
+                                    <span>Scan Plant</span>
+                                </div>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all duration-200">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 014-4h2a4 4 0 014 4v5a4 4 0 01-4 4h-2a4 4 0 01-4-4v-5z"></path></svg>
+                                    <span>Check Weather</span>
+                                </div>
+                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all duration-200">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10V6m0 4a4 4 0 014 4m-4-4a4 4 0 00-4 4m8 0v4m0-4a4 4 0 01-4-4m4 4a4 4 0 00-4-4m-4 4v4m0-4a4 4 0 014 4m-4-4a4 4 0 00-4 4"></path></svg>
+                                    <span>Get Crop Advice</span>
+                                </div>
+                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Weather Insights -->
+                    <div class="card p-6">
+                        <h2 class="text-lg font-semibold mb-4">Weather Insights</h2>
+                        <p class="text-sm text-gray-500">Weather data and insights would be displayed here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plant Scanner Content (Hidden by default) -->
+        <div id="scanner-content" class="page-content hidden flex-col items-center justify-center min-h-[500px]">
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">Plant Scanner</h1>
+            <p class="text-gray-600 mb-8 text-center">Upload an image of a plant leaf to get a diagnosis.</p>
+            <div id="upload-box" class="w-full max-w-lg p-8 border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-green-500 transition-colors duration-200">
+                <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v-2.18c0-1.784 1.396-3.18 3.18-3.18h9.64c1.784 0 3.18 1.396 3.18 3.18V16m0-2.18V7m0-2.18c0-1.784-1.396-3.18-3.18-3.18H7.18C5.396 2 4 3.396 4 5.18v2.18m0 7.82V16m0-2.18c0 1.604 1.396 2.999 3.18 2.999h9.64c1.784 0 3.18-1.395 3.18-2.999v-2.18"></path></svg>
+                <p class="text-gray-500 font-medium">Drag and drop or <span class="text-green-600 font-semibold">browse</span> to upload</p>
+                <input type="file" id="image-upload" class="hidden" accept="image/*">
+            </div>
+            
+            <div id="loading-state" class="hidden mt-8 text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-green-500 border-gray-200"></div>
+                <p class="mt-4 text-gray-600">Analyzing image...</p>
+            </div>
+
+            <div id="result-box" class="card p-6 mt-8 hidden w-full max-w-lg">
+                <div class="flex items-center mb-4">
+                    <img id="scanned-image" class="w-24 h-24 rounded-lg mr-4 object-cover" src="" alt="Scanned Plant">
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900" id="result-title"></h2>
+                        <p class="text-sm text-gray-600" id="result-disease"></p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2">Precautionary Advice</h3>
+                    <ul id="precaution-list" class="list-disc list-inside text-sm text-gray-600 space-y-1"></ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Suitable Plants for Your Location</h3>
+                    <ul id="suitable-plants-list" class="list-disc list-inside text-sm text-gray-600 space-y-1"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Monitor Content (Hidden by default) -->
+        <div id="weather-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Weather Monitor</h1>
+            <p class="text-sm text-gray-500 mb-8">View local weather data to help manage your crops.</p>
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold mb-4">Current Conditions</h2>
+                <p class="text-gray-600">Weather monitoring dashboard content will go here. You can add charts, maps, and live data from a weather API.</p>
+            </div>
+        </div>
+
+        <!-- Crop Advisor Content (Hidden by default) -->
+        <div id="crop-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Crop Advisor</h1>
+            <p class="text-sm text-gray-500 mb-8">Get personalized advice on which crops are best for your area.</p>
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold mb-4">Recommendations</h2>
+                <p class="text-gray-600">Crop advisor content will go here. This could include soil type analysis, seasonality guides, and a plant selector tool.</p>
+            </div>
+        </div>
+
+        <!-- Scan History Content (Hidden by default) -->
+        <div id="history-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Scan History</h1>
+            <p class="text-sm text-gray-500 mb-8">Review your past plant scans and diagnoses.</p>
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold mb-4">Past Scans</h2>
+                <p class="text-gray-600">A list or gallery of your previous scans would be displayed here. Each entry could show the plant, disease, and date of the scan.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const pageContents = document.querySelectorAll('.page-content');
+        const navItems = document.querySelectorAll('.nav-item');
+        const scanPlantBtn = document.getElementById('scan-plant-btn');
+        const uploadBox = document.getElementById('upload-box');
+        const imageUpload = document.getElementById('image-upload');
+        const loadingState = document.getElementById('loading-state');
+        const resultBox = document.getElementById('result-box');
+        const resultTitle = document.getElementById('result-title');
+        const resultDisease = document.getElementById('result-disease');
+        const precautionList = document.getElementById('precaution-list');
+        const suitablePlantsList = document.getElementById('suitable-plants-list');
+        const scannedImage = document.getElementById('scanned-image');
+
+        // Function to switch between pages
+        function switchPage(targetId) {
+            pageContents.forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('flex');
+            });
+            navItems.forEach(item => item.classList.remove('active'));
+
+            const targetPage = document.getElementById(targetId);
+            const targetNav = document.querySelector(`[data-target="${targetId}"]`);
+            if (targetPage && targetNav) {
+                targetPage.classList.remove('hidden');
+                targetNav.classList.add('active');
+                if (targetId === 'scanner-content') {
+                    targetPage.classList.add('flex');
+                }
+            }
+        }
+
+        // Event listeners for navigation
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+                if (targetId) {
+                    switchPage(targetId);
+                }
+            });
+        });
+
+        // Event listener for the "Scan Plant" button in Quick Actions
+        scanPlantBtn.addEventListener('click', () => {
+            switchPage('scanner-content');
+        });
+
+        // Event listeners for the file upload box
+        uploadBox.addEventListener('click', () => imageUpload.click());
+
+        imageUpload.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const base64Image = e.target.result;
+                    uploadBox.classList.add('hidden');
+                    loadingState.classList.remove('hidden');
+                    
+                    // Simulate API call
+                    setTimeout(() => {
+                        loadingState.classList.add('hidden');
+                        resultBox.classList.remove('hidden');
+                        
+                        // Mock data for the result
+                        const mockResult = {
+                            title: "Tomato Plant",
+                            disease: "Early Blight",
+                            precautionaryAdvice: [
+                                "Remove and destroy infected leaves.",
+                                "Ensure proper air circulation.",
+                                "Water at the base of the plant to avoid splashing leaves.",
+                                "Apply a copper-based fungicide as a last resort."
+                            ],
+                            suitablePlants: [
+                                "Bell Peppers",
+                                "Corn",
+                                "Cucumbers",
+                                "Lettuce"
+                            ]
+                        };
+
+                        // Populate the result box with mock data
+                        scannedImage.src = base64Image;
+                        resultTitle.textContent = mockResult.title;
+                        resultDisease.textContent = `Disease: ${mockResult.disease}`;
+                        
+                        precautionList.innerHTML = '';
+                        mockResult.precautionaryAdvice.forEach(advice => {
+                            const li = document.createElement('li');
+                            li.textContent = advice;
+                            precautionList.appendChild(li);
+                        });
+
+                        suitablePlantsList.innerHTML = '';
+                        mockResult.suitablePlants.forEach(plant => {
+                            const li = document.createElement('li');
+                            li.textContent = plant;
+                            suitablePlantsList.appendChild(li);
+                        });
+                    }, 2000); // 2-second delay to simulate network request
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+</body>
+</html>
