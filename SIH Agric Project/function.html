@@ -170,13 +170,16 @@
                 <label for="diseaseName">Disease Name</label>
                 <input type="text" id="diseaseName" name="diseaseName" placeholder="e.g., Leaf blight, Rust, etc.">
                 <label for="farmLocation">Farm Location</label>
-                <input type="text" id="farmLocation" name="farmLocation" placeholder="City, State or GPS coordinates">
+                <input type="text" id="farmLocation" name="farmLocation" placeholder="City, State or GPS coordinates" autocomplete="off">
+                <input type="text" id="diseaseName" name="diseaseName" placeholder="e.g., Leaf blight, Rust, etc." autocomplete="off">
                 <label for="plantDesc">Plant Condition Description</label>
                 <textarea id="plantDesc" name="plantDesc" placeholder="Describe the symptoms, affected areas, severity..."></textarea>
                 <label for="photo">Upload Photo</label>
                 <input type="file" id="photo" name="photo" accept="image/*">
                 <button type="button" class="camera-btn" onclick="openCamera()">📷 Take Photo with Camera</button>
                 <button type="submit" class="submit-btn">Submit for Analysis</button>
+            </form>
+            <div id="result"></div>
             </form>
             <div class="agri-chat">
                 <h2>AI Agriculture Assistant</h2>
@@ -233,8 +236,31 @@
         // Form submit handler (demo)
         document.getElementById('diseaseForm').onsubmit = function(e) {
             e.preventDefault();
-            alert('Your crop disease analysis request has been submitted!');
-        };
+
+            const formData = new FormData();
+            formData.append('diseaseName', document.getElementById('diseaseName').value);
+            formData.append('farmLocation', document.getElementById('farmLocation').value);
+            formData.append('plantDesc', document.getElementById('plantDesc').value);
+            const photoFile = document.getElementById('photo').files[0];
+            if (photoFile) {
+                formData.append('image', photoFile);
+            }
+
+            fetch('http://localhost:4000/api/detect-disease', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Save result to localStorage
+                localStorage.setItem('diseaseResult', JSON.stringify(data));
+                // Redirect to result page
+                window.location.href = 'result.html';
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+        }
     </script>
 </body>
 </html>
