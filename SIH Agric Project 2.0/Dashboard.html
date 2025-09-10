@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Health Dashboard</title>
+    <link rel="icon" type="image/png" href="img/agricfavicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f2dd;
+        }
+        .sidebar {
+            background-color: #aef9b0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            min-height: 100vh;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem 0;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .nav-item.active {
+            background-color: #f0fdf4;
+            color: #16a34a;
+        }
+        .nav-item:hover:not(.active) {
+            background-color: #f3f4f6;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="flex">
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar w-64 p-6 flex flex-col justify-between hidden md:flex">
+        <div>
+            <div class="flex items-center mb-8">
+                <div class="bg-gray-200 p-2 rounded-lg mr-2">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1v-3.25M7 17h10M7 10h10v7H7v-7zM7 10v3l-3 3M17 10v3l3 3m-3-3h-4v-4h-3v4H7"></path></svg>
+                </div>
+                <span class="text-xl font-bold">Dashboard</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-6 pl-2" data-lang="app_tagline">Plant Health Assistant</p>
+
+            <!-- Navigation Menu -->
+            <nav>
+                <div id="dashboard-nav" class="nav-item active" data-target="dashboard-content">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span data-lang="dashboard">Dashboard</span>
+                </div>
+                <!-- Plant Scanner -->
+                <div id="scanner-nav" class="nav-item" data-target="scanner-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-green-500">
+                        <path fill-rule="evenodd" d="M7.5 4.5a3 3 0 013-3h1.5a3 3 0 013 3v1.5h2.25a3 3 0 013 3v2.25a3 3 0 01-3 3h-.105a.75.75 0 00-.598.243l-2.771 2.77a.75.75 0 01-.588.204L9 16.25l-.266-.022a.75.75 0 01-.582-.581l-2.77-2.77a.75.75 0 00-.244-.598H4.5a3 3 0 01-3-3V9.75a3 3 0 013-3h2.25V4.5zM4.5 9a1.5 1.5 0 00-1.5 1.5v1.5a1.5 1.5 0 001.5 1.5h1.5A1.5 1.5 0 007.5 12V9H4.5zM16.5 9a1.5 1.5 0 00-1.5 1.5v1.5a1.5 1.5 0 001.5 1.5h1.5a1.5 1.5 0 001.5-1.5V10.5a1.5 1.5 0 00-1.5-1.5h-1.5z" clip-rule="evenodd" />
+                    </svg>
+                    <span data-lang="plant_scanner">Plant Scanner</span>
+                </div>
+                <!-- Weather Monitor -->
+                <div id="weather-nav" class="nav-item" data-target="weather-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-sky-500">
+                        <path d="M4.5 20.25a.75.75 0 01-.75-.75V8.56a2.25 2.25 0 011.536-2.126l7.5-1.875a.75.75 0 01.36.083l5.857 2.45a.75.75 0 01.36.083l-.004.004-.002.001.002.001.004.004A.75 0 0120.25 10.5v9a.75.75 0 01-.75.75h-15z" />
+                    </svg>
+                    <span data-lang="weather_monitor">Weather Monitor</span>
+                </div>
+                <!-- Crop Advisor -->
+                <div id="crop-nav" class="nav-item" data-target="crop-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-yellow-500">
+                        <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 14.5a.75.75 0 000-1.5h-1.5a.75.75 0 000 1.5h1.5z" clip-rule="evenodd" />
+                    </svg>
+                    <span data-lang="crop_advisor">Crop Advisor</span>
+                </div>
+                <!-- Market Price -->
+                <div id="market-nav" class="nav-item" data-target="market-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-purple-500">
+                        <path fill-rule="evenodd" d="M10.5 3.75a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75z" clip-rule="evenodd" />
+                        <path d="M11.25 14.25a.75.75 0 00-1.5 0v2.25a.75.75 0 001.5 0v-2.25z" />
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm.5 14.25a.75.75 0 00-.75-.75h-.75a.75.75 0 00-.75.75v1.25a.75.75 0 001.5 0v-1.25zm2.5-1.5a.75.75 0 00-.75-.75h-.75a.75.75 0 00-.75.75v1.25a.75.75 0 001.5 0v-1.25zM12 9a2.25 2.25 0 00-2.25 2.25c0 1.25-.75 2.25-1.5 2.25a.75.75 0 000 1.5c1.5 0 2.25-1.5 2.25-2.25h1.5c0 1.5 1.5 2.25 2.25 2.25a.75.75 0 000-1.5c-.75 0-1.5-1.25-1.5-2.25a.75.75 0 00-1.5 0V9z" clip-rule="evenodd" />
+                    </svg>
+                    <span data-lang="market_price">Market Price</span>
+                </div>
+                <div id="schemes-nav" class="nav-item" data-target="schemes-content">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span data-lang="govt_schemes">Govt Schemes</span>
+                </div>
+                <!-- Scan History -->
+                <div id="history-nav" class="nav-item" data-target="history-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-gray-500">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm.5 14.25a.75.75 0 00-.75-.75h-.75a.75.75 0 00-.75.75v1.25a.75.75 0 001.5 0v-1.25zm2.5-1.5a.75.75 0 00-.75-.75h-.75a.75.75 0 00-.75.75v1.25a.75.75 0 001.5 0v-1.25zM12 9a2.25 2.25 0 00-2.25 2.25c0 1.25-.75 2.25-1.5 2.25a.75.75 0 000 1.5c1.5 0 2.25-1.5 2.25-2.25h1.5c0 1.5 1.5 2.25 2.25 2.25a.75.75 0 000-1.5c-.75 0-1.5-1.25-1.5-2.25a.75.75 0 00-1.5 0V9z" clip-rule="evenodd" />
+                    </svg>
+                    <span data-lang="scan_history">Scan History</span>
+                </div>
+            </nav>
+
+            <!-- Quick Stats -->
+            <div class="mt-8 px-2">
+                <p class="text-xs text-gray-500 font-bold mb-4" data-lang="quick_stats_heading">QUICK STATS</p>
+                <div class="text-sm flex justify-between items-center mb-2">
+                    <span data-lang="plants_scanned">Plants Scanned</span>
+                    <span class="font-semibold text-gray-800" id="plants-scanned-count">2</span>
+                </div>
+                <div class="text-sm flex justify-between items-center">
+                    <span data-lang="health_score">Health Score</span>
+                    <span class="font-semibold text-gray-800">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- User and Language -->
+        <div class="flex flex-col space-y-4">
+            <div class="relative">
+                <select id="language-select" class="w-full p-2 rounded-lg bg-gray-100 text-sm font-semibold text-gray-700 appearance-none pr-8">
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="mr">Marathi</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="bn">Bengali</option>
+                    <option value="pa">Punjabi</option>
+                    <option value="kn">Kannada</option>
+                </select>
+            </div>
+            <div class="flex items-center space-x-3 p-3 rounded-lg bg-gray-100">
+                <div class="bg-green-100 p-2 rounded-full">
+                    <span class="text-green-800 font-bold">U</span>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold" data-lang="user_role">Farmer</p>
+                    <p class="text-xs text-gray-500" data-lang="user_title">Plant Health Expert</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8 overflow-y-auto">
+        
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" class="page-content">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2" data-lang="dashboard_heading">Plant Health Dashboard</h1>
+            <p class="text-sm text-gray-500 mb-8" data-lang="dashboard_tagline">Monitor your crops and get intelligent farming insights</p>
+
+            <!-- Dashboard Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500" data-lang="card_scanned_plants">Plants Scanned</span>
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0v-6m0 6a4 4 0 100-8 4 4 0 000 8zM3 12a9 9 0 1018 0 9 9 0 00-18 0z"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold" data-lang="card_scanned_count">2</p>
+                    <p class="text-sm text-gray-500" data-lang="card_total_diagnoses">Total diagnoses</p>
+                </div>
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500" data-lang="card_healthy_plants">Healthy Plants</span>
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold" data-lang="card_healthy_count">0</p>
+                    <p class="text-sm text-gray-500" data-lang="card_good_condition">Good condition</p>
+                </div>
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500" data-lang="card_temperature">Temperature</span>
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10a2 2 0 00-2-2V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 00-2 2h-4a2 2 0 00-2-2v-4a2 2 0 00-2-2"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold" data-lang="card_temp_value">Loading...</p>
+                    <p class="text-sm text-gray-500" data-lang="card_current_reading">Current reading</p>
+                </div>
+                <div class="card p-6 flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500" data-lang="card_growth_trend">Growth Trend</span>
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h9m-9 0v8m0-8a4 4 0 11-8 0m8 0a4 4 0 108 0m-8 0v4m0-4a4 4 0 10-8 0m8 0a4 4 0 118 0m-8 0v4"></path></svg>
+                    </div>
+                    <p class="text-3xl font-bold" data-lang="card_growth_value">Optimal</p>
+                    <p class="text-sm text-gray-500" data-lang="card_current_season">Current season</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Recent Plant Scans -->
+                <div class="card p-6 col-span-2">
+                    <h2 class="text-lg font-semibold mb-4" data-lang="recent_scans_heading">Recent Plant Scans</h2>
+                    <div class="flex items-center p-4 border rounded-xl mb-4">
+                        <div class="bg-gray-100 p-3 rounded-full mr-4">
+                             <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10a2 2 0 00-2-2V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 00-2 2h-4a2 2 0 00-2-2v-4a2 2 0 00-2-2"></path></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900" data-lang="plant_name_1">Rose Bush <span class="status-badge bg-red-100 text-red-600" data-lang="status_high">▲ high</span></h3>
+                            <p class="text-sm text-gray-600" data-lang="disease_1">Powdery Mildew</p>
+                            <p class="text-xs text-gray-400 mt-1" data-lang="date_1">Aug 30, 2025 at 1:32 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-4 border rounded-xl">
+                        <div class="bg-gray-100 p-3 rounded-full mr-4">
+                            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10a2 2 0 00-2-2V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 00-2 2h-4a2 2 0 00-2-2v-4a2 2 0 00-2-2"></path></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900" data-lang="plant_name_2">Tomato Plant <span class="status-badge bg-orange-100 text-orange-600" data-lang="status_moderate">● moderate</span></h3>
+                            <p class="text-sm text-gray-600" data-lang="disease_2">Early Blight</p>
+                            <p class="text-xs text-gray-400 mt-1" data-lang="date_2">Aug 30, 2025 at 1:32 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions and Weather Insights -->
+                <div class="flex flex-col space-y-6">
+                    <!-- Quick Actions -->
+                    <div class="card p-6">
+                        <h2 class="text-lg font-semibold mb-4" data-lang="quick_actions_heading">Quick Actions</h2>
+                        <div class="space-y-4">
+                            <button id="scan-plant-btn" class="w-full flex items-center justify-between p-4 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl transition-all duration-200">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.586a2 2 0 011.414.586L10 10.586l1.586 1.586A2 2 0 0113.586 13h.586a2 2 0 012 2v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4a2 2 0 012-2z"></path></svg>
+                                    <span data-lang="scan_plant_btn">Scan Plant</span>
+                                </div>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all duration-200">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 014-4h2a4 4 0 014 4v5a4 4 0 01-4 4h-2a4 4 0 01-4-4v-5z"></path></svg>
+                                    <span data-lang="check_weather_btn">Check Weather</span>
+                                </div>
+                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all duration-200">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10V6m0 4a4 4 0 014 4m-4-4a4 4 0 00-4 4m8 0v4m0-4a4 4 0 01-4-4m4 4a4 4 0 00-4-4m-4 4v4m0-4a4 4 0 014 4m-4-4a4 4 0 00-4 4"></path></svg>
+                                    <span data-lang="get_crop_advice_btn">Get Crop Advice</span>
+                                </div>
+                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Weather Insights -->
+                    <div class="card p-6">
+                        <h2 class="text-lg font-semibold mb-4" data-lang="weather_insights_heading">Weather Insights</h2>
+                        <p class="text-sm text-gray-500" data-lang="weather_insights_content">Weather data and insights would be displayed here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plant Scanner Content (Hidden by default) -->
+        <div id="scanner-content" class="page-content hidden flex-col items-center justify-center min-h-[500px]">
+            <h1 class="text-2xl font-bold text-gray-800 mb-4" data-lang="scanner_heading">Plant Scanner</h1>
+            <p class="text-gray-600 mb-8 text-center" data-lang="scanner_tagline">Upload an image of a plant leaf to get a diagnosis.</p>
+            <div id="upload-box" class="w-full max-w-lg p-8 border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-green-500 transition-colors duration-200">
+                <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v-2.18c0-1.784 1.396-3.18 3.18-3.18h9.64c1.784 0 3.18 1.396 3.18 3.18V16m0-2.18V7m0-2.18c0-1.784-1.396-3.18-3.18-3.18H7.18C5.396 2 4 3.396 4 5.18v2.18m0 7.82V16m0-2.18c0 1.604 1.396 2.999 3.18 2.999h9.64c1.784 0 3.18-1.395 3.18-2.999v-2.18"></path></svg>
+                <p class="text-gray-500 font-medium" data-lang="upload_message">Drag and drop or <span class="text-green-600 font-semibold" data-lang="browse_text">browse</span> to upload</p>
+                <input type="file" id="image-upload" class="hidden" accept="image/*">
+            </div>
+            
+            <div id="loading-state" class="hidden mt-8 text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-green-500 border-gray-200"></div>
+                <p class="mt-4 text-gray-600" data-lang="loading_message">Analyzing image...</p>
+            </div>
+
+            <div id="result-box" class="card p-6 mt-8 hidden w-full max-w-lg">
+                <div class="flex items-center mb-4">
+                    <img id="scanned-image" class="w-24 h-24 rounded-lg mr-4 object-cover" src="" alt="Scanned Plant">
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900" id="result-title"></h2>
+                        <p class="text-sm text-gray-600" id="result-disease"></p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2" data-lang="precaution_heading">Precautionary Advice</h3>
+                    <ul id="precaution-list" class="list-disc list-inside text-sm text-gray-600 space-y-1"></ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-800 mb-2" data-lang="suitable_plants_heading">Suitable Plants for Your Location</h3>
+                    <ul id="suitable-plants-list" class="list-disc list-inside text-sm text-gray-600 space-y-1"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Monitor Content (Hidden by default) -->
+        <div id="weather-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2" data-lang="weather_heading">Weather Monitor</h1>
+            <p class="text-sm text-gray-500 mb-8" data-lang="weather_tagline">View local weather data to help manage your crops.</p>
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold mb-4" data-lang="current_conditions_heading">Current Conditions</h2>
+                <p class="text-gray-600" data-lang="weather_placeholder">Weather monitoring dashboard content will go here. You can add charts, maps, and live data from a weather API.</p>
+            </div>
+        </div>
+
+        <!-- Crop Advisor Content (Hidden by default) -->
+        <div id="crop-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2" data-lang="crop_advisor_heading">Crop Advisor</h1>
+            <p class="text-sm text-gray-500 mb-8" data-lang="crop_advisor_tagline">Get personalized advice on which crops are best for your area.</p>
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold mb-4" data-lang="recommendations_heading">Recommendations</h2>
+                <p class="text-gray-600" data-lang="crop_advisor_placeholder">Crop advisor content will go here. This could include soil type analysis, seasonality guides, and a plant selector tool.</p>
+            </div>
+        </div>
+
+        <!-- Market Price Content (Hidden by default) -->
+        <div id="market-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2" data-lang="market_price_heading">Market Price</h1>
+            <p class="text-sm text-gray-500 mb-8" data-lang="market_price_tagline">Check the latest market prices for your crops.</p>
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold mb-4" data-lang="crop_prices_heading">Crop Prices (Simulated)</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold text-gray-800">Wheat (गेहूँ)</span>
+                        <span class="text-lg font-bold text-green-600">₹2,450/quintal</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold text-gray-800">Rice (चावल)</span>
+                        <span class="text-lg font-bold text-green-600">₹3,800/quintal</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold text-gray-800">Corn (मक्का)</span>
+                        <span class="text-lg font-bold text-green-600">₹2,100/quintal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Govt Schemes Content (Hidden by default) -->
+        <div id="schemes-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2" data-lang="schemes_heading">Government Schemes</h1>
+            <p class="text-sm text-gray-500 mb-8" data-lang="schemes_tagline">Find out about beneficial government schemes for farmers.</p>
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold mb-4" data-lang="featured_schemes_heading">Featured Schemes</h2>
+                <ul class="space-y-4 text-gray-600">
+                    <li><strong class="text-gray-900" data-lang="scheme_name_1">Pradhan Mantri Fasal Bima Yojana (PMFBY):</strong> <span data-lang="scheme_desc_1">Crop insurance scheme for farmers.</span></li>
+                    <li><strong class="text-gray-900" data-lang="scheme_name_2">Kisan Credit Card (KCC):</strong> <span data-lang="scheme_desc_2">Provides timely credit to farmers for agricultural needs.</span></li>
+                    <li><strong class="text-gray-900" data-lang="scheme_name_3">Soil Health Card Scheme:</strong> <span data-lang="scheme_desc_3">Provides farmers with a card containing crop-wise recommendations of fertilizers.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Scan History Content (Hidden by default) -->
+        <div id="history-content" class="page-content hidden">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2" data-lang="history_heading">Scan History</h1>
+            <p class="text-sm text-gray-500 mb-8" data-lang="history_tagline">Review your past plant scans and diagnoses.</p>
+            <div class="card p-6">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" data-lang="history_table_plant">Plant</th>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" data-lang="history_table_disease">Disease</th>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" data-lang="history_table_status">Status</th>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" data-lang="history_table_date">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" data-lang="plant_name_1">Rose Bush</td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" data-lang="disease_1">Powdery Mildew</td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <span class="status-badge bg-red-100 text-red-600" data-lang="status_high">High</span>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" data-lang="date_1">Aug 30, 2025</td>
+                            </tr>
+                            <tr>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" data-lang="plant_name_2">Tomato Plant</td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" data-lang="disease_2">Early Blight</td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <span class="status-badge bg-orange-100 text-orange-600" data-lang="status_moderate">Moderate</span>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" data-lang="date_2">Aug 30, 2025</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Language Translation Data ---
+        const translations = {
+            en: {
+                app_tagline: "Plant Health Assistant",
+                dashboard: "Dashboard",
+                plant_scanner: "Plant Scanner",
+                weather_monitor: "Weather Monitor",
+                crop_advisor: "Crop Advisor",
+                market_price: "Market Price",
+                govt_schemes: "Govt Schemes",
+                scan_history: "Scan History",
+                quick_stats_heading: "QUICK STATS",
+                plants_scanned: "Plants Scanned",
+                health_score: "Health Score",
+                user_role: "Farmer",
+                user_title: "Plant Health Expert",
+                dashboard_heading: "Plant Health Dashboard",
+                dashboard_tagline: "Monitor your crops and get intelligent farming insights",
+                card_scanned_plants: "Plants Scanned",
+                card_scanned_count: "2",
+                card_total_diagnoses: "Total diagnoses",
+                card_healthy_plants: "Healthy Plants",
+                card_healthy_count: "0",
+                card_good_condition: "Good condition",
+                card_temperature: "Temperature",
+                card_temp_value: "Loading...",
+                card_current_reading: "Current reading",
+                card_growth_trend: "Growth Trend",
+                card_growth_value: "Optimal",
+                card_current_season: "Current season",
+                recent_scans_heading: "Recent Plant Scans",
+                plant_name_1: "Rose Bush",
+                status_high: "▲ high",
+                disease_1: "Powdery Mildew",
+                date_1: "Aug 30, 2025 at 1:32 PM",
+                plant_name_2: "Tomato Plant",
+                status_moderate: "● moderate",
+                disease_2: "Early Blight",
+                date_2: "Aug 30, 2025 at 1:32 PM",
+                quick_actions_heading: "Quick Actions",
+                scan_plant_btn: "Scan Plant",
+                check_weather_btn: "Check Weather",
+                get_crop_advice_btn: "Get Crop Advice",
+                weather_insights_heading: "Weather Insights",
+                weather_insights_content: "Weather data and insights would be displayed here.",
+                scanner_heading: "Plant Scanner",
+                scanner_tagline: "Upload an image of a plant leaf to get a diagnosis.",
+                upload_message: "Drag and drop or browse to upload",
+                browse_text: "browse",
+                loading_message: "Analyzing image...",
+                precaution_heading: "Precautionary Advice",
+                suitable_plants_heading: "Suitable Plants for Your Location",
+                weather_heading: "Weather Monitor",
+                weather_tagline: "View local weather data to help manage your crops.",
+                current_conditions_heading: "Current Conditions",
+                weather_placeholder: "Weather monitoring dashboard content will go here. You can add charts, maps, and live data from a weather API.",
+                crop_advisor_heading: "Crop Advisor",
+                crop_advisor_tagline: "Get personalized advice on which crops are best for your area.",
+                recommendations_heading: "Recommendations",
+                crop_advisor_placeholder: "Crop advisor content will go here. This could include soil type analysis, seasonality guides, and a plant selector tool.",
+                market_price_heading: "Market Price",
+                market_price_tagline: "Check the latest market prices for your crops.",
+                crop_prices_heading: "Crop Prices (Simulated)",
+                schemes_heading: "Government Schemes",
+                schemes_tagline: "Find out about beneficial government schemes for farmers.",
+                featured_schemes_heading: "Featured Schemes",
+                scheme_name_1: "Pradhan Mantri Fasal Bima Yojana (PMFBY):",
+                scheme_desc_1: "Crop insurance scheme for farmers.",
+                scheme_name_2: "Kisan Credit Card (KCC):",
+                scheme_desc_2: "Provides timely credit to farmers for agricultural needs.",
+                scheme_name_3: "Soil Health Card Scheme:",
+                scheme_desc_3: "Provides farmers with a card containing crop-wise recommendations of fertilizers.",
+                history_heading: "Scan History",
+                history_tagline: "Review your past plant scans and diagnoses.",
+                history_table_plant: "Plant",
+                history_table_disease: "Disease",
+                history_table_status: "Status",
+                history_table_date: "Date"
+            },
+            hi: {
+                app_tagline: "पौधों के स्वास्थ्य का सहायक",
+                dashboard: "डैशबोर्ड",
+                plant_scanner: "पौधे का स्कैनर",
+                weather_monitor: "मौसम की निगरानी",
+                crop_advisor: "फसल सलाहकार",
+                market_price: "बाजार मूल्य",
+                govt_schemes: "सरकारी योजनाएं",
+                scan_history: "स्कैन का इतिहास",
+                quick_stats_heading: "त्वरित आँकड़े",
+                plants_scanned: "स्कैन किए गए पौधे",
+                health_score: "स्वास्थ्य स्कोर",
+                user_role: "किसान",
+                user_title: "पौधे के स्वास्थ्य विशेषज्ञ",
+                dashboard_heading: "पौधे का स्वास्थ्य डैशबोर्ड",
+                dashboard_tagline: "अपनी फसलों की निगरानी करें और कृषि संबंधी जानकारी प्राप्त करें",
+                card_scanned_plants: "स्कैन किए गए पौधे",
+                card_scanned_count: "2",
+                card_total_diagnoses: "कुल निदान",
+                card_healthy_plants: "स्वस्थ पौधे",
+                card_healthy_count: "0",
+                card_good_condition: "अच्छी स्थिति",
+                card_temperature: "तापमान",
+                card_temp_value: "लोड हो रहा है...",
+                card_current_reading: "वर्तमान रीडिंग",
+                card_growth_trend: "विकास की प्रवृत्ति",
+                card_growth_value: "इष्टतम",
+                card_current_season: "वर्तमान मौसम",
+                recent_scans_heading: "हाल के पौधे स्कैन",
+                plant_name_1: "गुलाब की झाड़ी",
+                status_high: "▲ उच्च",
+                disease_1: "पाउडरी मिल्ड्यू",
+                date_1: "30 अगस्त, 2025 को 1:32 PM",
+                plant_name_2: "टमाटर का पौधा",
+                status_moderate: "● मध्यम",
+                disease_2: "अर्ली ब्लाइट",
+                date_2: "30 अगस्त, 2025 को 1:32 PM",
+                quick_actions_heading: "त्वरित कार्य",
+                scan_plant_btn: "पौधे को स्कैन करें",
+                check_weather_btn: "मौसम जांचें",
+                get_crop_advice_btn: "फसल सलाह लें",
+                weather_insights_heading: "मौसम की जानकारी",
+                weather_insights_content: "मौसम का डेटा और जानकारी यहां प्रदर्शित होगी।",
+                scanner_heading: "पौधे का स्कैनर",
+                scanner_tagline: "निदान के लिए पौधे की पत्ती की एक छवि अपलोड करें।",
+                upload_message: "अपलोड करने के लिए खींचें और छोड़ें या ब्राउज़ करें",
+                browse_text: "ब्राउज़ करें",
+                loading_message: "छवि का विश्लेषण हो रहा है...",
+                precaution_heading: "एहतियाती सलाह",
+                suitable_plants_heading: "आपके स्थान के लिए उपयुक्त पौधे",
+                weather_heading: "मौसम की निगरानी",
+                weather_tagline: "अपनी फसलों का प्रबंधन करने में मदद के लिए स्थानीय मौसम डेटा देखें।",
+                current_conditions_heading: "वर्तमान स्थितियाँ",
+                weather_placeholder: "मौसम निगरानी डैशबोर्ड सामग्री यहाँ जाएगी। आप मौसम एपीआई से चार्ट, नक्शे और लाइव डेटा जोड़ सकते हैं।",
+                crop_advisor_heading: "फसल सलाहकार",
+                crop_advisor_tagline: "अपने क्षेत्र के लिए कौन सी फसलें सबसे अच्छी हैं, इस पर व्यक्तिगत सलाह प्राप्त करें।",
+                recommendations_heading: "सिफारिशें",
+                crop_advisor_placeholder: "फसल सलाहकार सामग्री यहाँ जाएगी। इसमें मिट्टी के प्रकार का विश्लेषण, मौसमी गाइड और एक पौधे चयनकर्ता उपकरण शामिल हो सकता है।",
+                market_price_heading: "बाजार मूल्य",
+                market_price_tagline: "अपनी फसलों के लिए नवीनतम बाजार मूल्यों की जांच करें।",
+                crop_prices_heading: "फसल मूल्य (सिमुलेटेड)",
+                schemes_heading: "सरकारी योजनाएं",
+                schemes_tagline: "किसानों के लिए लाभकारी सरकारी योजनाओं के बारे में जानें।",
+                featured_schemes_heading: "विशेष योजनाएं",
+                scheme_name_1: "प्रधानमंत्री फसल बीमा योजना (PMFBY):",
+                scheme_desc_1: "किसानों के लिए फसल बीमा योजना।",
+                scheme_name_2: "किसान क्रेडिट कार्ड (KCC):",
+                scheme_desc_2: "किसानों को कृषि जरूरतों के लिए समय पर ऋण प्रदान करता है।",
+                scheme_name_3: "मृदा स्वास्थ्य कार्ड योजना:",
+                scheme_desc_3: "किसानों को उर्वरकों की फसल-वार सिफारिशों वाला एक कार्ड प्रदान करता है।",
+                history_heading: "स्कैन का इतिहास",
+                history_tagline: "अपने पिछले पौधे स्कैन और निदान की समीक्षा करें।",
+                history_table_plant: "पौधा",
+                history_table_disease: "रोग",
+                history_table_status: "स्थिति",
+                history_table_date: "दिनांक"
+            },
+            mr: { /* Marathi translations */ },
+            ta: { /* Tamil translations */ },
+            te: { /* Telugu translations */ },
+            bn: { /* Bengali translations */ },
+            pa: { /* Punjabi translations */ },
+            kn: { /* Kannada translations */ }
+        };
+
+        // --- DOM Elements ---
+        const pageContents = document.querySelectorAll('.page-content');
+        const navItems = document.querySelectorAll('.nav-item');
+        const scanPlantBtn = document.getElementById('scan-plant-btn');
+        const languageSelect = document.getElementById('language-select');
+        const uploadBox = document.getElementById('upload-box');
+        const imageUpload = document.getElementById('image-upload');
+        const loadingState = document.getElementById('loading-state');
+        const resultBox = document.getElementById('result-box');
+        const resultTitle = document.getElementById('result-title');
+        const resultDisease = document.getElementById('result-disease');
+        const precautionList = document.getElementById('precaution-list');
+        const suitablePlantsList = document.getElementById('suitable-plants-list');
+        const scannedImage = document.getElementById('scanned-image');
+
+        // --- Functions ---
+        function switchPage(targetId) {
+            pageContents.forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('flex');
+            });
+            navItems.forEach(item => item.classList.remove('active'));
+
+            const targetPage = document.getElementById(targetId);
+            const targetNav = document.querySelector(`[data-target="${targetId}"]`);
+            if (targetPage && targetNav) {
+                targetPage.classList.remove('hidden');
+                targetNav.classList.add('active');
+                if (targetId === 'scanner-content') {
+                    targetPage.classList.add('flex');
+                }
+            }
+        }
+
+        function switchLanguage(lang) {
+            const currentTranslations = translations[lang] || translations.en;
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const key = element.getAttribute('data-lang');
+                if (currentTranslations[key]) {
+                    element.textContent = currentTranslations[key];
+                }
+            });
+        }
+
+        // --- Event Listeners ---
+        // Navigation clicks
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+                if (targetId) {
+                    switchPage(targetId);
+                }
+            });
+        });
+
+        // "Scan Plant" button click
+        scanPlantBtn.addEventListener('click', () => {
+            switchPage('scanner-content');
+        });
+
+        // Language selector change
+        languageSelect.addEventListener('change', (e) => {
+            switchLanguage(e.target.value);
+        });
+
+        // File upload box click
+        uploadBox.addEventListener('click', () => imageUpload.click());
+
+        // Image upload change
+        imageUpload.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const base64Image = e.target.result;
+                    uploadBox.classList.add('hidden');
+                    loadingState.classList.remove('hidden');
+                    
+                    // Simulate API call within a Promise to handle rejections
+                    new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            try {
+                                // Mock data for the result
+                                const mockResult = {
+                                    title: "Tomato Plant",
+                                    disease: "Early Blight",
+                                    precautionaryAdvice: [
+                                        "Remove and destroy infected leaves.",
+                                        "Ensure proper air circulation.",
+                                        "Water at the base of the plant to avoid splashing leaves.",
+                                        "Apply a copper-based fungicide as a last resort."
+                                    ],
+                                    suitablePlants: [
+                                        "Bell Peppers",
+                                        "Corn",
+                                        "Cucumbers",
+                                        "Lettuce"
+                                    ]
+                                };
+                                resolve(mockResult);
+                            } catch (error) {
+                                reject(error);
+                            }
+                        }, 2000); // 2-second delay to simulate network request
+                    })
+                    .then(mockResult => {
+                        loadingState.classList.add('hidden');
+                        resultBox.classList.remove('hidden');
+                        
+                        // Populate the result box with mock data
+                        scannedImage.src = base64Image;
+                        resultTitle.textContent = mockResult.title;
+                        resultDisease.textContent = `Disease: ${mockResult.disease}`;
+                        
+                        precautionList.innerHTML = '';
+                        mockResult.precautionaryAdvice.forEach(advice => {
+                            const li = document.createElement('li');
+                            li.textContent = advice;
+                            precautionList.appendChild(li);
+                        });
+
+                        suitablePlantsList.innerHTML = '';
+                        mockResult.suitablePlants.forEach(plant => {
+                            const li = document.createElement('li');
+                            li.textContent = plant;
+                            suitablePlantsList.appendChild(li);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error during simulated API call:", error);
+                        loadingState.classList.add('hidden');
+                        uploadBox.classList.remove('hidden');
+                        // You could display an error message to the user here
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Initial language setting
+        switchLanguage('en');
+    </script>
+</body>
+</html>

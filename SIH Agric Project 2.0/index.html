@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/agricfavicon.png"> <!--Favicon-->
+    <title>SMART AGRIC AI</title> <!--Title-->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet"> <!--googlefonts-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> <!--Bootstrap Carousel-->
+    <link rel="stylesheet" href="style.css"> <!--css stylesheet-->
+    <meta name="Smart Agric" content="Welcome to our SmartAgric site: We bring to you the latest technologies in farming to help farmers maximize production and solve their most disturbing challenges.">
+    
+</head>
+<body> <!--NAVBAR SECTION-->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="img/agricfavicon.png" alt="AgriSmart Logo" class="logo-icon">
+            <span class="logo-text">AgricSmart</span>
+        </div>
+        <ul class="navbar-links">
+            <li><a href="#home">Home🏠</a></li>
+            <li><a href="#solutions">Solutions📍</a></li>
+            <li><a href="#features">Features📐</a></li>
+            <li><a href="#about-banner">About📃</a></li>
+            <li><a href="#contact">Contact☎️</a></li>
+        </ul>
+        <div class="navbar-actions">
+            <!--<a href="">fsfs</a>-->
+            <!--<a href="" class="" target="_blank">Start</a> -->
+            <label class="checkboxDesign" style="margin-left:20px;vertical-align:middle;">
+                <input type="checkbox" name="checkboxDesign" id="themeToggle">
+            </label>
+
+            <select id="languageSelect" class="Languages">
+                <option value="en">English</option>
+                <hr>
+                <option value="hi">Hindi</option>
+                <hr>
+                <option value="pa">Punjabi</option>
+                <hr>
+                <option value="ta">Tamil</option>
+                <hr>
+                <option value="te">Telugu</option>
+                <hr>
+                <option value="be">Bengali</option>
+                <hr>
+                <option value="ma">Maharati</option>
+                <hr>
+                <option value="gu">Gujarati</option>
+                <hr>
+                <option value="ka">Kannada</option>
+                <hr>
+                <option value="mal">Malayalam</option>
+                <hr>
+                <option value="od">Odia</option>
+                <hr>
+                <option value="as">Assamese</option>
+            </select>
+            
+        </div>
+        <button class="navbar-menu-icon" aria-label="Open menu" onclick="toggleMobileMenu()">
+            <span class="material-icons">menu</span>
+        </button>
+    </nav>
+
+    <script> // Nav-bar menu dropdown list for mobile
+    function toggleMobileMenu() {
+        var links = document.querySelector('.navbar-links');
+        var body = document.body;
+        if (window.innerWidth <= 800) {
+            if (links.style.display === 'block') {
+                links.style.display = 'none';
+            } else {
+                links.style.display = 'block';
+                links.style.position = 'absolute';
+                links.style.right = '18px';
+                links.style.top = '60px';
+                var isDark = body.classList.contains('theme-dark');
+                links.style.background = isDark ? '#0f2230' : '#fff';
+                links.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                links.style.borderRadius = '12px';
+                links.style.padding = '12px 0';
+                links.style.minWidth = '160px';
+                links.style.zIndex = '99';
+            }
+        }
+    }
+    // Ensure mobile menu is hidden on initial load at ≤800px
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelector('.navbar-links');
+        if (links && window.innerWidth <= 800) {
+            links.style.display = 'none';
+        }
+    });
+    // Close mobile menu when clicking outside or pressing Escape
+    document.addEventListener('click', function(e) {
+        var links = document.querySelector('.navbar-links');
+        var menuBtn = document.querySelector('.navbar-menu-icon');
+        if (!links || window.innerWidth > 800) return;
+        if (links.style.display === 'block') {
+            var clickInsideMenu = links.contains(e.target);
+            var clickOnToggle = menuBtn && menuBtn.contains(e.target);
+            if (!clickInsideMenu && !clickOnToggle) {
+                links.style.display = 'none';
+            }
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Escape') return;
+        var links = document.querySelector('.navbar-links');
+        if (links && window.innerWidth <= 800 && links.style.display === 'block') {
+            links.style.display = 'none';
+        }
+    });
+    window.addEventListener('resize', function() {
+        var links = document.querySelector('.navbar-links');
+        if (window.innerWidth > 800 && links) {
+            links.style.display = '';
+            links.style.position = '';
+            links.style.right = '';
+            links.style.top = '';
+            links.style.background = '';
+            links.style.boxShadow = '';
+            links.style.borderRadius = '';
+            links.style.padding = '';
+            links.style.minWidth = '';
+            links.style.zIndex = '';
+        }
+    });
+    </script>
+    <main class="hero-section" id="#home">
+        <div class="hero-content">
+            <h1>
+                Empowering <span class="highlight-green">Indian Farmers</span><br>
+                with AI Technology
+            </h1>
+            <p class="hero-desc">
+                Advanced solutions for crop disease detection, weather prediction, resource optimization, and expert consultation - all in your local language.
+            </p>
+            <div class="hero-actions">
+                <a href="function.html" class="hero-btn hero-btn-green" target="_blank">Start<span class="arrow">→</span></a>
+                <a href="Dashboard.html" class="hero-btn hero-btn-outline" target="_blank">Dashboard</a> <!--<span class="play-icon">📖</span>-->
+            </div>
+            <div class="hero-stats">
+                <span class="stat"><span class="dot green"></span> 10,000+ Active Farmers</span>
+                <span class="stat"><span class="dot green"></span> 15+ Languages Supported</span>
+            </div>
+        </div>
+        <div class="hero-image-container">
+            <div id="heroCarousel" class="carousel slide hero-image" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="img/photo1.jpeg" class="d-block w-100" alt="Farmer 1">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Healthy Crops, Brighter Futures</h5>
+                            <p>Track crop health and get timely recommendations to improve yield and quality.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/photo2.jpeg" class="d-block w-100" alt="Farmer 2">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Weather-Smart Decisions</h5>
+                            <p>Plan irrigation and harvests with hyperlocal forecasts tailored to your farm.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/photo3.jpeg" class="d-block w-100" alt="Farmer 3">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Resources That Work Harder</h5>
+                            <p>Optimize water and fertilizer usage to reduce cost and boost productivity.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/photo4.jpeg" class="d-block w-100" alt="Farmer 4">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Advice When You Need It</h5>
+                            <p>Chat with experts and get multilingual guidance any time, anywhere.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/photo5.jpeg" class="d-block w-100" alt="Farmer 5">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Insights That Drive Action</h5>
+                            <p>Make data-backed decisions with real-time analytics and market updates.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!--CHALLENGES SECTION-->
+    <section class="challenges-section" id="solutions">
+        <br>
+        <br>
+        <h2 class="challenges-title">Solving Critical Agricultural Challenges</h2>
+        <p class="challenges-desc">Our AI-powered platform addresses the most pressing issues faced by Indian farmers today</p>
+        <div class="challenges-grid">
+            <div class="challenge-card">
+                <div class="challenge-icon" style="background:rgba(255, 87, 34, 0.08);color:#ff5722;">
+                    <span class="material-icons">event</span>
+                </div>
+                <div class="challenge-content">
+                    <h3>Crop Diseases & Pests</h3>
+                    <p><span class="problem-label">Problem:</span> Limited awareness and delayed diagnosis cause significant crop losses</p>
+                    <p><span class="solution-label">Our Solution:</span> AI-powered image recognition instantly identifies diseases and pests with 95% accuracy</p>
+                </div>
+            </div>
+            <div class="challenge-card">
+                <div class="challenge-icon" style="background:rgba(33, 150, 243, 0.08);color:#2196f3;">
+                    <span class="material-icons">cloud</span>
+                </div>
+                <div class="challenge-content">
+                    <h3>Unpredictable Weather</h3>
+                    <p><span class="problem-label">Problem:</span> Climate variability leads to uncertainty in irrigation and harvest planning</p>
+                    <p><span class="solution-label">Our Solution:</span> Hyperlocal weather forecasting with 7-day predictions and farming recommendations</p>
+                </div>
+            </div>
+            <div class="challenge-card">
+                <div class="challenge-icon" style="background:rgba(0, 230, 118, 0.08);color:#00c853;">
+                    <span class="material-icons">attach_money</span>
+                </div>
+                <div class="challenge-content">
+                    <h3>Inefficient Resource Use</h3>
+                    <p><span class="problem-label">Problem:</span> Over/under use of water and fertilizers reduces productivity and increases costs</p>
+                    <p><span class="solution-label">Our Solution:</span> Smart resource optimization algorithms reduce costs by 30% while improving yields</p>
+                </div>
+            </div>
+            <div class="challenge-card">
+                <div class="challenge-icon" style="background:rgba(156, 39, 176, 0.08);color:#9c27b0;">
+                    <span class="material-icons">person</span>
+                </div>
+                <div class="challenge-content">
+                    <h3>Lack of Expert Access</h3>
+                    <p><span class="problem-label">Problem:</span> Farmers often struggle to get timely, personalized advice in their local language</p>
+                    <p><span class="solution-label">Our Solution:</span> 24/7 multilingual expert consultation and AI-powered personalized recommendations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Challenges section icons-->
+
+    <!-- Features Section Start -->
+    <section class="features-section" id="features">
+        <br>
+        <br>
+        <div class="features-heading">
+            <h2>Powerful Features for Modern Farming</h2>
+            <p>Leverage cutting-edge technology to transform your agricultural practices</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="img/feature1.jpeg" alt="AI Disease Detection">
+                    <span class="material-icons feature-icon" style="color:#43b97f;">photo_camera</span>
+                </div>
+                <div class="feature-content">
+                    <h3>AI Disease Detection</h3>
+                    <p>Snap a photo of your crop and get instant disease identification with treatment recommendations</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="img/feature2.jpeg" alt="Smart Weather Alerts">
+                    <span class="material-icons feature-icon" style="color:#43b97f;">notifications</span>
+                </div>
+                <div class="feature-content">
+                    <h3>Smart Weather Alerts</h3>
+                    <p>Receive personalized weather updates and farming advice directly on your phone</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="img/feature3.jpeg" alt="Resource Optimization">
+                    <span class="material-icons feature-icon" style="color:#43b97f;">trending_up</span>
+                </div>
+                <div class="feature-content">
+                    <h3>Resource Optimization</h3>
+                    <p>Track water usage, fertilizer application, and optimize resource allocation for maximum yield</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="img/feature4.jpeg" alt="Expert Consultation">
+                    <span class="material-icons feature-icon" style="color:#43b97f;">chat</span>
+                </div>
+                <div class="feature-content">
+                    <h3>Expert Consultation</h3>
+                    <p>Connect with agricultural experts in Hindi, Tamil, Telugu, and 12+ other local languages</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="img/feature5.jpeg" alt="Real-time Insights">
+                    <span class="material-icons feature-icon" style="color:#43b97f;">bolt</span>
+                </div>
+                <div class="feature-content">
+                    <h3>Real-time Insights</h3>
+                    <p>Get instant analytics on crop health, soil conditions, and optimal harvest timing</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="img/feature6.jpeg" alt="Secure & Private">
+                    <span class="material-icons feature-icon" style="color:#43b97f;">lock</span>
+                </div>
+                <div class="feature-content">
+                    <h3>Secure & Private</h3>
+                    <p>Your farm data is encrypted and protected with enterprise-grade security standards</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Features Section End -->
+
+    <!-- About Section Start (from about.html) -->
+    <section id="about-banner" style="width:100%;background:linear-gradient(180deg,#e9f6ec,#f8fafc 30%);border-bottom:1px solid #e2e8f0;">
+        <div class="container" style="max-width:1100px;margin:0 auto;padding:24px;">
+            <div class="about-banner" style="display:flex;align-items:center;justify-content:center;gap:16px;">
+                <span class="about-brand" style="color:#2f6d3a;font-weight:800;font-size:20px;letter-spacing:0.3px;"></span>
+            </div>
+        </div>
+    </section>
+
+    <main id="about-main">
+        <section id="how" class="section">
+            <div class="container">
+                <h2>How SmartAgric works ?</h2>
+                <p class="lead">Whether you are a smallholder farmer, a cooperative lead, or a buyer, the platform is designed to be simple and practical.</p>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3 style="margin:0 0 8px;">1) Create your farm profile</h3>
+                        <p>Add your location, crops, and season. This unlocks localized weather, pests, and market insights tailored to your farm.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin:0 0 8px;">2) Explore crop guides</h3>
+                        <p>Search the knowledge base for crop-specific best practices, from land prep to post-harvest handling.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin:0 0 8px;">3) Check live prices</h3>
+                        <p>Visit the market page to compare daily prices, build a watchlist, and get reminders for your target price.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin:0 0 8px;">4) Ask an agronomist</h3>
+                        <p>Open the advisory chat to share field photos and receive guidance from certified extension officers.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin:0 0 8px;">5) Source inputs</h3>
+                        <p>Browse vetted suppliers for seeds, fertilizer, and irrigation tools, with verified reviews and delivery estimates.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin:0 0 8px;">6) Sell and deliver</h3>
+                        <p>Match with nearby buyers and book logistics partners who understand post-harvest requirements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story" class="section" aria-labelledby="story-title">
+            <div class="container">
+                <h2 id="story-title">Backstory: Why we built this</h2>
+                <p class="lead">SmartAgric began as a volunteer project during a season of unpredictable rains and falling prices. Farmers told us they needed timely, local data and stronger market links — not another complex app.</p>
+                <ol class="timeline" aria-label="Company milestones">
+                    <li class="tl-item">
+                        <span class="tl-dot" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <h4>2019 — Listening to fields</h4>
+                            <p>We ran workshops across rural communities and documented the most common yield and price challenges.</p>
+                        </div>
+                    </li>
+                    <li class="tl-item">
+                        <span class="tl-dot" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <h4>2020 — First weather-price prototype</h4>
+                            <p>A simple dashboard combined seasonal forecasts with market prices. Adoption grew through cooperatives.</p>
+                        </div>
+                    </li>
+                    <li class="tl-item">
+                        <span class="tl-dot" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <h4>2022 — Marketplace and advisory</h4>
+                            <p>We added trusted buyer matchmaking and access to certified extension officers for field-side advice.</p>
+                        </div>
+                    </li>
+                    <li class="tl-item">
+                        <span class="tl-dot" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <h4>2024 — Regional partnerships</h4>
+                            <p>Partnerships with research institutes, input suppliers, and microfinance programs expanded our reach.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="partners" class="section" aria-labelledby="partners-title">
+            <div class="container">
+                <h2 id="partners-title">Collaborations and partnerships</h2>
+                <p class="lead">We work with public and private organizations to ensure farmers get credible guidance, fair prices, and reliable services.</p>
+                <div class="partner-row" role="list">
+                    <div class="partner" role="listitem">AgriResearch Lab</div>
+                    <div class="partner" role="listitem">Co-op Networks</div>
+                    <div class="partner" role="listitem">Green Inputs Ltd.</div>
+                    <div class="partner" role="listitem">FarmFinance</div>
+                </div>
+                <div style="margin-top:12px;" class="card">
+                    <p style="margin:0;">Interested in partnering? Email <a href="mailto:support@agrismart.in">support@agrismart.in</a> to explore research data-sharing, field trials, or market access programs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="values" class="section" aria-labelledby="values-title">
+            <div class="container">
+                <h2 id="values-title">Our theme, mission, goals, and achievements</h2>
+                <p class="lead">Open the sections below to learn what drives this project.</p>
+                <div class="accordion" id="about-accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false" aria-controls="panel-theme" id="control-theme">
+                            <span>Project Theme</span>
+                            <svg class="accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div id="panel-theme" class="accordion-panel" role="region" aria-labelledby="control-theme" hidden>
+                            <p>Resilient agriculture through data-informed decisions, fair markets, and community knowledge. We focus on climate-smart practices and inclusive access.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false" aria-controls="panel-mission" id="control-mission">
+                            <span>Mission</span>
+                            <svg class="accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div id="panel-mission" class="accordion-panel" role="region" aria-labelledby="control-mission" hidden>
+                            <p>Enable every farmer to plan, grow, and sell with confidence by unifying weather, extension knowledge, market prices, and trusted services in one place.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false" aria-controls="panel-goal" id="control-goal">
+                            <span>Goals</span>
+                            <svg class="accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div id="panel-goal" class="accordion-panel" role="region" aria-labelledby="control-goal" hidden>
+                            <ul>
+                                <li>Improve yield and reduce post-harvest losses for smallholders.</li>
+                                <li>Increase farmer income by enabling transparent, competitive pricing.</li>
+                                <li>Strengthen local ecosystems via research, finance, and logistics partners.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" aria-expanded="false" aria-controls="panel-achievements" id="control-achievements">
+                            <span>Achievements</span>
+                            <svg class="accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div id="panel-achievements" class="accordion-panel" role="region" aria-labelledby="control-achievements" hidden>
+                            <ul>
+                                <li>Supported 35,000+ farmers across 6 regions with localized advisories.</li>
+                                <li>Onboarded 250+ buyers and suppliers with verified quality standards.</li>
+                                <li>Facilitated 12,000+ successful marketplace transactions safely.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+            <!-- About Section End -->
+
+    
+    <!-- Footer Section Start -->
+    <footer class="footer-section" id="contact">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="material-icons" style="color:#43b97f;font-size:2rem;vertical-align:middle;">eco</span>
+                        <span class="footer-logo-text">AgriSmart</span>
+                    </div>
+        <p class="footer-desc">Empowering Indian farmers with AI-driven solutions for sustainable agriculture. Bridging the gap between traditional farming and modern technology.</p>
+        <!-- About.html JS integration -->
+        <script>
+        // Current year for about.html
+        document.addEventListener('DOMContentLoaded', function() {
+            var yearEl = document.getElementById('year');
+            if(yearEl) yearEl.textContent = new Date().getFullYear();
+        });
+
+        // Accessible accordion logic from about.html
+        (function initAccordion() {
+            var root = document.getElementById('about-accordion');
+            if (!root) return;
+            var items = root.querySelectorAll('.accordion-item');
+            items.forEach(function(item) {
+                var header = item.querySelector('.accordion-header');
+                var panel = item.querySelector('.accordion-panel');
+                var icon = item.querySelector('.accordion-icon');
+                if (!header || !panel) return;
+
+                header.addEventListener('click', function() {
+                    var expanded = header.getAttribute('aria-expanded') === 'true';
+                    // Close all other items for single-open behavior
+                    items.forEach(function(other) {
+                        var h = other.querySelector('.accordion-header');
+                        var p = other.querySelector('.accordion-panel');
+                        var i = other.querySelector('.accordion-icon');
+                        if (h && p) {
+                            h.setAttribute('aria-expanded', 'false');
+                            p.hidden = true;
+                            if (i) i.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    // Open selected if it was closed
+                    if (!expanded) {
+                        header.setAttribute('aria-expanded', 'true');
+                        panel.hidden = false;
+                        if (icon) icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+
+                // Enable keyboard toggle with Arrow keys and Enter/Space (button already handles Enter/Space natively)
+                header.addEventListener('keydown', function(e) {
+                    var key = e.key;
+                    if (key === 'ArrowDown' || key === 'ArrowUp') {
+                        e.preventDefault();
+                        var headers = Array.prototype.slice.call(root.querySelectorAll('.accordion-header'));
+                        var index = headers.indexOf(header);
+                        var nextIndex = key === 'ArrowDown' ? Math.min(headers.length - 1, index + 1) : Math.max(0, index - 1);
+                        headers[nextIndex].focus();
+                    }
+                });
+            });
+        })();
+                                </script>
+                    <div class="footer-social">
+                        <a href="" aria-label="Facebook"><span class="material-icons">facebook</span></a>
+                        <a href="" aria-label="Twitter"><span class="material-icons">twitter</span></a>
+                        <a href="" aria-label="Instagram"><span class="material-icons">instagram</span></a>
+                        <a href="" aria-label="YouTube"><span class="material-icons">youtube</span></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Solutions</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><span class="material-icons">email</span> support@agrismart.in</li>
+                        <li><span class="material-icons">call</span> +91 98765 43210</li>
+                        <li><span class="material-icons">location_on</span> 123 Tech Park, Electronic City<br>Bhopal, Madhya Pradesh 560100</li>
+                    </ul>
+                    <div class="footer-langs">
+                        <span class="footer-langs-title">Languages Supported</span>
+                        <p>Hindi • Tamil • Telugu • Bengali<br>Maharati • Gujarati • Punjabi • Kannada<br>Malayalam • Odia • Assamese • English</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2025 AgriSmart. All rights reserved. Built for Indian farmers.</span>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+
+         <!--Scroll to top button-->
+        <a href="#" class="totop">
+            <img src="img/scrolltotop.png" alt="">
+        </a>
+    </footer>
+    <!-- Footer Section End -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show scroll-to-top button only when footer is visible
+        document.addEventListener('DOMContentLoaded', function() {
+            const totopBtn = document.querySelector('.totop');
+            const footer = document.querySelector('footer');
+            totopBtn.style.display = 'none';
+            function checkFooterVisible() {
+                const rect = footer.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                // If the footer is visible in the viewport
+                if (rect.top < windowHeight && rect.bottom > 0) {
+                    totopBtn.style.display = 'block';
+                } else {
+                    totopBtn.style.display = 'none';
+                }
+            }
+            window.addEventListener('scroll', checkFooterVisible);
+            window.addEventListener('resize', checkFooterVisible);
+            checkFooterVisible();
+        });
+    </script>
+    <script> // Light/dark theme toggle with persistence
+        document.addEventListener('DOMContentLoaded', function() {
+            var toggle = document.getElementById('themeToggle');
+            var body = document.body;
+            function setTheme(mode){
+                if(mode === 'dark'){
+                    body.classList.remove('theme-light');
+                    body.classList.add('theme-dark');
+                    toggle.checked = true;
+                } else {
+                    body.classList.remove('theme-dark');
+                    body.classList.add('theme-light');
+                    toggle.checked = false;
+                }
+                localStorage.setItem('app_theme', mode);
+            }
+            var saved = localStorage.getItem('app_theme');
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(saved ? saved : (prefersDark ? 'dark' : 'light'));
+            toggle.addEventListener('change', function(){
+                setTheme(toggle.checked ? 'dark' : 'light');
+            });
+        });
+    </script>
+    
+    <!-- Translations (12 Indian languages) -->
+    <script id="app-translations" type="application/json">
+    {
+        "en": { "brand": "AgricSmart", "nav.home": "Home🏠", "nav.solutions": "Solutions📍", "nav.features": "Features📐", "nav.about": "About📃", "nav.contact": "Contact☎️" },
+        "hi": { "brand": "कृषि स्मार्ट", "nav.home": "होम🏠", "nav.solutions": "समाधान📍", "nav.features": "विशेषताएँ📐", "nav.about": "के बारे में📃", "nav.contact": "संपर्क☎️" },
+        "pa": { "brand": "ਐਗਰਿਕ ਸਮਾਰਟ", "nav.home": "ਘਰ🏠", "nav.solutions": "ਹੱਲ📍", "nav.features": "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ📐", "nav.about": "ਬਾਰੇ📃", "nav.contact": "ਸੰਪਰਕ☎️" },
+        "ta": { "brand": "அக்ரிக் ஸ்மார்ட்", "nav.home": "முகப்பு🏠", "nav.solutions": "தீர்வுகள்📍", "nav.features": "அம்சங்கள்📐", "nav.about": "பற்றி📃", "nav.contact": "தொடர்பு☎️" },
+        "te": { "brand": "అగ్రిక్ స్మార్ట్", "nav.home": "హోమ్🏠", "nav.solutions": "పరిష్కారాలు📍", "nav.features": "లక్షణాలు📐", "nav.about": "గురించి📃", "nav.contact": "సంప్రదించండి☎️" },
+        "be": { "brand": "AgricSmart", "nav.home": "হোম🏠", "nav.solutions": "সমাধান📍", "nav.features": "বৈশিষ্ট্য📐", "nav.about": "সম্পর্কে📃", "nav.contact": "যোগাযোগ☎️" },
+        "ma": { "brand": "कृषी स्मार्ट", "nav.home": "मुख्यपृष्ठ🏠", "nav.solutions": "उपाय📍", "nav.features": "वैशिष्ट्ये📐", "nav.about": "विषयी📃", "nav.contact": "संपर्क☎️" },
+        "gu": { "brand": "એગ્રીક સ્માર્ટ", "nav.home": "હોમ🏠", "nav.solutions": "ઉકેલો📍", "nav.features": "વિશેષતાઓ📐", "nav.about": "વિશે📃", "nav.contact": "સંપર્ક☎️" },
+        "ka": { "brand": "ಅಗ್ರಿಕ್ ಸ್ಮಾರ್ಟ್", "nav.home": "ಮುಖಪುಟ🏠", "nav.solutions": "ಪರಿಹಾರಗಳು📍", "nav.features": "ವೈಶಿಷ್ಟ್ಯಗಳು📐", "nav.about": "ಬಗ್ಗೆ📃", "nav.contact": "ಸಂಪರ್ಕ☎️" },
+        "mal": { "brand": "അഗ്രിക് സ്മാർട്ട്", "nav.home": "ഹോം🏠", "nav.solutions": "പരിഹാരങ്ങൾ📍", "nav.features": "സവിശേഷതകൾ📐", "nav.about": "കുറിച്ച്📃", "nav.contact": "ബന്ധപ്പെടുക☎️" },
+        "od": { "brand": "ଏଗ୍ରିକ୍ ସ୍ମାର୍ଟ |", "nav.home": "ମୁଖ୍ୟ🏠", "nav.solutions": "ସମାଧାନ📍", "nav.features": "ବୈଶିଷ୍ଟ୍ୟ📐", "nav.about": "ବିଷୟରେ📃", "nav.contact": "ଯୋଗାଯୋଗ☎️" },
+        "as": { "brand": "এগ্ৰিক স্মাৰ্ট", "nav.home": "হোম🏠", "nav.solutions": "সমাধান📍", "nav.features": "বৈশিষ্ট্য📐", "nav.about": "বিষয়ে📃", "nav.contact": "যোগাযোগ☎️" }
+    }
+    </script>
+    <script>
+    // Language switching using the translations JSON above
+    document.addEventListener('DOMContentLoaded', function() {
+        var select = document.getElementById('languageSelect');
+        var translationsNode = document.getElementById('app-translations');
+        if (!select || !translationsNode) return;
+        var translations = {};
+        try { translations = JSON.parse(translationsNode.textContent); } catch(e) {}
+
+        function applyTranslations(lang) {
+            var dict = translations[lang] || translations['en'] || {};
+            // Brand
+            var brandEl = document.querySelector('.logo-text');
+            if (brandEl && dict['brand']) brandEl.textContent = dict['brand'];
+            // Navbar links
+            var map = [
+                { sel: '.navbar-links li:nth-child(1) a', key: 'nav.home' },
+                { sel: '.navbar-links li:nth-child(2) a', key: 'nav.solutions' },
+                { sel: '.navbar-links li:nth-child(3) a', key: 'nav.features' },
+                { sel: '.navbar-links li:nth-child(4) a', key: 'nav.about' },
+                { sel: '.navbar-links li:nth-child(5) a', key: 'nav.contact' }
+            ];
+            map.forEach(function(item) {
+                var el = document.querySelector(item.sel);
+                if (el && dict[item.key]) el.textContent = dict[item.key];
+            });
+        }
+
+        // Persist and restore language
+        var saved = localStorage.getItem('app_lang');
+        if (saved && translations[saved]) {
+            select.value = saved;
+        }
+        applyTranslations(select.value || 'en');
+
+        select.addEventListener('change', function() {
+            var lang = select.value;
+            localStorage.setItem('app_lang', lang);
+            applyTranslations(lang);
+        });
+    });
+    </script>
+</body>
+</html>
