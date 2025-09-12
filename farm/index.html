@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kisan AI – AI Assistant for Farmers</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html"><span class="logo">🌿</span> <span>Kisan AI</span></a>
+      <nav class="nav" aria-label="Main">
+        <a data-nav href="./index.html">Home</a>
+        <a data-nav href="./diagnose.html">Diagnose</a>
+        <a data-nav href="./weather.html">Weather</a>
+        <a data-nav href="./image-analysis.html">Image Analysis</a>
+        <a data-nav href="./about.html">About</a>
+      </nav>
+      <a class="btn primary" href="./diagnose.html">Start</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="blob bl1"></div>
+    <div class="blob bl2"></div>
+    <div class="container hero-inner">
+      <div>
+        <span class="badge">🌱 <span class="kicker">Smart Farming, Simple Tools</span></span>
+        <h1 class="title">AI Assistant for Farmers</h1>
+        <p class="subtitle">Diagnose crop diseases, get weather updates, and analyze plant health with just a photo.</p>
+        <div class="actions">
+          <a class="btn primary" href="./diagnose.html">Start Now</a>
+          <a class="btn outline" href="./image-analysis.html">Upload Photo</a>
+          <a class="btn soft" href="./diagnose.html#symptoms">Enter Symptoms</a>
+        </div>
+        <div class="actions" style="margin-top:16px">
+          <span class="pill">⚕️ Quick Diagnosis</span>
+          <span class="pill">☁️ Local Weather</span>
+          <span class="pill">✅ Safe Suggestions</span>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="aspect-ratio:4/3;display:flex;align-items:center;justify-content:center">
+          <div class="badge-soft">Works offline on mobile</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid cols-3">
+      <div class="card">
+        <div class="em">⚕️</div>
+        <h3>Disease Detection</h3>
+        <p>Describe symptoms or snap a photo to identify issues early.</p>
+        <div class="actions"><a class="btn soft" href="./diagnose.html">Learn more →</a></div>
+      </div>
+      <div class="card">
+        <div class="em">☁️</div>
+        <h3>Weather Forecasts</h3>
+        <p>Plan irrigation and spraying with accurate local forecasts.</p>
+        <div class="actions"><a class="btn soft" href="./weather.html">Learn more →</a></div>
+      </div>
+      <div class="card">
+        <div class="em">📷</div>
+        <h3>Image Analysis</h3>
+        <p>AI checks leaf color, spots, and stress levels instantly.</p>
+        <div class="actions"><a class="btn soft" href="./image-analysis.html">Learn more →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container grid">
+      <div>
+        <h4>Contact</h4>
+        <div class="small">Email: support@kisanai.app<br>Phone: +91 90000 00000</div>
+      </div>
+      <div>
+        <h4>Social</h4>
+        <div class="small"><a href="#">Twitter</a> · <a href="#">Facebook</a> · <a href="#">YouTube</a></div>
+      </div>
+      <div>
+        <h4>Language</h4>
+        <select class="input">
+          <option>English</option>
+          <option>हिन्दी (Hindi)</option>
+        </select>
+      </div>
+    </div>
+    <div class="container small"
+      style="padding:12px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>© <span id="year"></span> Kisan AI. All rights reserved.</div>
+      <div class="small"><a href="#">Privacy</a> · <a href="#">Terms</a></div>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+
+</html>

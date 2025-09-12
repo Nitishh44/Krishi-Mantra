@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kisan AI – Disease Detection</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html"><span class="logo">🌿</span> <span>Kisan AI</span></a>
+      <nav class="nav" aria-label="Main">
+        <a data-nav href="./index.html">Home</a>
+        <a data-nav href="./diagnose.html">Diagnose</a>
+        <a data-nav href="./weather.html">Weather</a>
+        <a data-nav href="./image-analysis.html">Image Analysis</a>
+        <a data-nav href="./about.html">About</a>
+      </nav>
+      <a class="btn primary" href="./diagnose.html">Start</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title" style="font-size:2rem">Disease Detection</h1>
+      <p class="small" style="margin-top:6px">Enter crop details or upload a photo. We will analyze and suggest treatment.</p>
+      <div class="grid" style="margin-top:18px">
+        <div class="card">
+          <h2 class="small" style="font-weight:800">Option A: Enter Details</h2>
+          <form id="diagnose-form" class="grid" style="margin-top:12px;gap:12px">
+            <div>
+              <label class="label" for="plant">Plant Type</label>
+              <select id="plant" class="input" required>
+                <option value="" disabled selected>Select plant</option>
+                <option>Tomato</option>
+                <option>Potato</option>
+                <option>Wheat</option>
+                <option>Rice</option>
+                <option>Cotton</option>
+                <option>Maize</option>
+              </select>
+            </div>
+            <div>
+              <label class="label" for="location">Location</label>
+              <div class="row">
+                <input id="location" class="input" placeholder="Village / City or GPS" required>
+                <button id="use-gps" type="button" class="btn outline">Use GPS</button>
+              </div>
+            </div>
+            <div id="symptoms">
+              <label class="label" for="sym">Symptoms</label>
+              <textarea id="sym" class="input" style="min-height:120px" placeholder="e.g., brown spots on leaves, yellowing edges..." required></textarea>
+            </div>
+            <button class="btn primary" type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="card">
+          <h2 class="small" style="font-weight:800">Option B: Upload / Take Photo</h2>
+          <div class="row" style="margin-top:12px">
+            <label class="btn outline" style="cursor:pointer">
+              📷 Choose Image
+              <input id="photo" type="file" accept="image/*" capture="environment" style="display:none"/>
+            </label>
+          </div>
+          <div class="hide" style="margin-top:12px"><img id="preview" alt="preview"/></div>
+        </div>
+      </div>
+
+      <div id="diagnose-loading" class="hide" style="margin-top:16px">
+        <div class="card small">Analyzing with AI...</div>
+      </div>
+      <div id="diagnose-result" class="result" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container grid">
+      <div>
+        <h4>Contact</h4>
+        <div class="small">Email: support@kisanai.app<br>Phone: +91 90000 00000</div>
+      </div>
+      <div>
+        <h4>Social</h4>
+        <div class="small"><a href="#">Twitter</a> · <a href="#">Facebook</a> · <a href="#">YouTube</a></div>
+      </div>
+      <div>
+        <h4>Language</h4>
+        <select class="input"><option>English</option><option>हिन्दी (Hindi)</option></select>
+      </div>
+    </div>
+    <div class="container small" style="padding:12px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>© <span id="year"></span> Kisan AI. All rights reserved.</div>
+      <div class="small"><a href="#">Privacy</a> · <a href="#">Terms</a></div>
+    </div>
+  </footer>
+  <script src="./app.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
